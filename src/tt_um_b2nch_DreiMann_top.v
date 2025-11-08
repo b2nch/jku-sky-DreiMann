@@ -42,36 +42,42 @@ module tt_um_b2nch_DreiMann_top (
   debounce db1 (.clk(clk), .rst_n(rst_n), .btn_in(btn1), .btn_pressed(btn1_db));
   debounce db2 (.clk(clk), .rst_n(rst_n), .btn_in(btn2), .btn_pressed(btn2_db));
 
-  // Würfel-Steuerung (Wert einfrieren bei Tasterdruck)
+  // Würfel-Steuerung
   wire [2:0] stored1, stored2;
   wire rolled1, rolled2;
+
   dice_controller dc1 (
-      .clk(clk),
-      .rst_n(rst_n),
-      .roll_btn(btn1_db),
-      .running_value(dice_val1),
-      .stored_value(stored1),
-      .rolled(rolled1)
-  );
-  dice_controller dc2 (
-      .clk(clk),
-      .rst_n(rst_n),
-      .roll_btn(btn2_db),
-      .running_value(dice_val2),
-      .stored_value(stored2),
-      .rolled(rolled2)
+    .clk(clk),
+    .rst_n(rst_n),
+    .roll_btn(btn1_db),
+    .running_value(dice_val1),
+    .stored_value(stored1),
+    .rolled(rolled1)
   );
 
-  // Anzeige-Logik (entscheidet, was gezeigt werden soll)
+  dice_controller dc2 (
+    .clk(clk),
+    .rst_n(rst_n),
+    .roll_btn(btn2_db),
+    .running_value(dice_val2),
+    .stored_value(stored2),
+    .rolled(rolled2)
+  );
+
+  // Anzeige-Logik
+  // Anzeige-Logik Signale
   wire [3:0] digit;
   wire [1:0] pattern;
+
   display_logic disp (
-      .dice1(stored1),
-      .dice2(stored2),
-      .rolled1(rolled1),
-      .rolled2(rolled2),
-      .digit(digit),
-      .pattern(pattern)
+    .clk(clk),
+    .rst_n(rst_n),
+    .dice1(stored1),
+    .dice2(stored2),
+    .rolled1(rolled1),
+    .rolled2(rolled2),
+    .digit(digit),
+    .pattern(pattern)
   );
 
   // 7-Segment-Decoder (Umschaltbar zwischen CA/CC)
