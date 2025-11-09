@@ -2,26 +2,31 @@
 	Simple testbench for tt_um_b2nch_DreiMann_top.
 */
 
-`timescale 1ns / 1ns // `timescale <time_unit> / <time_precision>
+`timescale 1ns / 1ns
 
-//`include "../src/tt_um_b2nch_DreiMann_top.v"
+//`include "tt_um_b2nch_DreiMann_top.v"
+//`include "dice_generator.v"
+//`include "dice_controller.v"
+//`include "seven_seg_decoder.v"
+//`include "display_logic.v"
+//`include "debounce.v"
 
 module tt_um_b2nch_DreiMann_top_tb;
 
-	// inputs for tt_um_example
-	reg [7:0] ui_in = 8'h00;
-	reg [7:0] uio_in = 8'h00;
+	// Inputs
+	reg [7:0] ui_in = 8'd0;  // buttons + switch
+	reg [7:0] uio_in = 8'd0;
 	reg ena = 1'b1;
 	reg clk = 1'b0;
-	reg rst_n = 1'b0;  // Active low reset
-	
-	// outputs from tt_um_example
-	wire [7:0] 	uo_out;
-	wire [7:0] 	uio_out;
-	wire [7:0] 	uio_oe;
-	
-	//DUT
-	tt_um_b2nch_DreiMann_top tt_um_b2nch_DreiMann_top_dut (
+	reg rst_n = 1'b0;         // active low reset
+
+	// Outputs
+	wire [7:0] uo_out;
+	wire [7:0] uio_out;
+	wire [7:0] uio_oe;
+
+	// DUT
+	tt_um_b2nch_DreiMann_top dut (
 		.ui_in(ui_in),
 		.uo_out(uo_out),
 		.uio_in(uio_in),
@@ -31,23 +36,69 @@ module tt_um_b2nch_DreiMann_top_tb;
 		.clk(clk),
 		.rst_n(rst_n)
 	);
-	
-	// Clock-Generator
-	always #5 clk = ~clk; // 100 MHz Takt
-	
-	// Button-Simulation
+
+	// Clock: 10 ns period
+	/* verilator lint_off STMTDLY */
+	always #5 clk = ~clk;
+	/* verilator lint_on STMTDLY */
+
 	initial begin
 		$dumpfile("tt_um_b2nch_DreiMann_top_tb.vcd");
-		$dumpvars;
+		$dumpvars(0, tt_um_b2nch_DreiMann_top_tb);
+
+		// Apply reset
+		rst_n = 1'b0;
+		#20;
+		rst_n = 1'b1;
+
+		// Wait a few clock cycles
+		#50;
+
+		// Press button 1 to roll first dice
+		ui_in[0] = 1'b1;
+		#5000;
+		ui_in[0] = 1'b0;
+
+		// Wait for debounce + clock
+		#5000;
+
+		// Press button 2 to roll second dice
+		ui_in[1] = 1'b1;
+		#5000;
+		ui_in[1] = 1'b0;
 		
+		#30000;
+		ui_in[0] = 1'b1;
+		ui_in[1] = 1'b1;
+		#10000;
+		ui_in[0] = 1'b0;
+		ui_in[1] = 1'b0;
 		
-		/* verilator lint_off STMTDLY */
-		#50 rst_n = 1'b1; // deassert reset
-		#50 ui_in[0] = 1'b1;
-		#50 ui_in[0] = 1'b0;
-		#50 ui_in[0] = 1'b1;
-		#50 ui_in[0] = 1'b0;
-		#3000 $finish; // finish
-		/* verilator lint_on STMTDLY */
+		#30000
+		ui_in[1] = 1'b1;
+		#10000
+		ui_in[0] = 1'b1;
+		#1000;
+		ui_in[0] = 1'b0;
+		#10000
+		ui_in[1] = 1'b0;
+
+		// Wait a few cycles for display to update
+		#80;
+
+		// Switch to common cathode
+		ui_in[2] = 1'b1;
+		#20000;
+
+		// Roll again for both dice
+		ui_in[0] = 1'b1;
+		ui_in[1] = 1'b1;
+		#10000;
+		ui_in[0] = 1'b0;
+		ui_in[1] = 1'b0;
+
+		#10000 $finish;
 	end
-endmodule // tt_um_b2nch_DreiMann_top_tb
+
+endmodule
+

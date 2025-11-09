@@ -10,7 +10,7 @@
 `include "dice_controller.v"
 `include "seven_seg_decoder.v"
 `include "display_logic.v"
-`include "button_debounce.v"
+`include "debounce.v"
 
 module tt_um_b2nch_DreiMann_top (
     input  wire [7:0] ui_in,    // Eingänge (Buttons, Switches)

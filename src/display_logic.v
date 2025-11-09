@@ -9,14 +9,11 @@ module display_logic (
     output reg  [1:0] pattern
 );
     reg rolled1_flag, rolled2_flag;
-    reg [2:0] last_dice1, last_dice2;
 
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             rolled1_flag <= 0;
             rolled2_flag <= 0;
-            last_dice1 <= 3'd0;
-            last_dice2 <= 3'd0;
             digit <= 4'd0;
             pattern <= 2'd3; // mittlerer Strich
         end else begin
@@ -25,6 +22,7 @@ module display_logic (
             if (rolled2) rolled2_flag <= 1'b1;
 
             // Update nur, wenn beide Flags gesetzt und Würfelwerte sich geändert haben
+            
             if (rolled1_flag & rolled2_flag) begin
 
                 if (dice1 == dice2) begin
