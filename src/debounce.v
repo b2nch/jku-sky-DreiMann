@@ -4,7 +4,7 @@ module debounce (
     input  wire btn_in,
     output reg  btn_pressed
 );
-  reg [7:0] cnt;
+  reg [15:0] cnt;
   reg btn_sync, btn_last, btn_stable, btn_stable_last;
 
   always @(posedge clk or negedge rst_n) begin
@@ -22,11 +22,11 @@ module debounce (
       // reset counter if signal changed
       if (btn_sync != btn_last)
         cnt <= 0;
-      else if (cnt < 8'hFF)
+      else if (cnt < 16'hFFFF)
         cnt <= cnt + 1;
 
       // update stable button state when counter maxed out
-      if (cnt >= 8'hFA)
+      if (cnt >= 16'hFFFA)
         btn_stable <= btn_sync;
 
       // detect rising edge of the *debounced* signal

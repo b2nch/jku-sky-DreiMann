@@ -56,35 +56,35 @@ module tt_um_b2nch_DreiMann_top_tb;
 
 		// Press button 1 to roll first dice
 		ui_in[0] = 1'b1;
-		#5000;
+		#1000000;
 		ui_in[0] = 1'b0;
 
 		// Wait for debounce + clock
-		#5000;
+		#1000000;
 
 		// Press button 2 to roll second dice
 		ui_in[1] = 1'b1;
-		#5000;
+		#1000000;
 		ui_in[1] = 1'b0;
 		
-		#30000;
+		#300000000;
 		ui_in[0] = 1'b1;
 		ui_in[1] = 1'b1;
-		#10000;
+		#1000000;
 		ui_in[0] = 1'b0;
 		ui_in[1] = 1'b0;
 		
-		#30000
+		#30000000
 		ui_in[1] = 1'b1;
-		#10000
+		#1000000;
 		ui_in[0] = 1'b1;
-		#1000;
+		#1000000;
 		ui_in[0] = 1'b0;
-		#10000
+		#1000000;
 		ui_in[1] = 1'b0;
 
 		// Wait a few cycles for display to update
-		#80;
+		#80000000;
 
 		// Switch to common cathode
 		ui_in[2] = 1'b1;
@@ -93,7 +93,7 @@ module tt_um_b2nch_DreiMann_top_tb;
 		// Roll again for both dice
 		ui_in[0] = 1'b1;
 		ui_in[1] = 1'b1;
-		#10000;
+		#1000000;
 		ui_in[0] = 1'b0;
 		ui_in[1] = 1'b0;
 

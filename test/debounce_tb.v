@@ -52,7 +52,7 @@ module debounce_tb;
         #5;
         btn_in = 1;
         #50;   // Jetzt gedrückt und stabil
-        #5000;
+        #1000000;
 
         // --- Test 3: Loslassen des Tasters mit Prellen ---
         $display("TEST 3: Taster loslassen mit Prellen");
