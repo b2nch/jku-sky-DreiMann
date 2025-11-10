@@ -21,7 +21,9 @@ A move consists of rolling two dice. To do this, one person must press both butt
 - None of the above dice combinations: only the middle line on the display lights up
 
 **Game explanation:**
-- At the beginning, there is no DreiMann. During the round, both dice are rolled in turn (both buttons pressed). If a double is rolled (number 1 to 6 on the display), the person who rolled the result can give the number of minus points shown to another person.
+- At the beginning, there is no DreiMann.
+- During the round, both dice are rolled in turn (both buttons pressed).
+- If a double is rolled (number 1 to 6 on the display), the person who rolled the result can give the number of minus points shown to another person.
 - If a “21” is rolled (all LEDs light up), each person in the round receives one minus point.
 - If there is no DreiMann, rolling a 3 makes you the DreiMann (the 3 horizontal lines light up). You remain the DreiMann until you roll exactly a 3 on your turn.
 - If there is already a DreiMann and another person rolls a 3, the current DreiMann receives a minus point. Minus points from a double (see above) may not be given to the DreiMann.
