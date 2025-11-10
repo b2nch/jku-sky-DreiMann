@@ -15,10 +15,10 @@ This implementation replaces the dice and displays the current move on a seven-s
 A move consists of rolling two dice. To do this, one person must press both buttons. The result is shown on the 7-segment display.
 
 **Possible dice combinations and their display:**
-Both dice show the same number (double): the number is displayed (1-6)
-“21” - one of the dice is 1 and the other is 2: all LEDs on the display light up
-Exactly one 3 - one of the dice shows 3 and the other does not: the 3 horizontal lines on the display light up
-None of the above dice combinations: only the middle line on the display lights up
+- Both dice show the same number (double): the number is displayed (1-6)
+- “21” - one of the dice is 1 and the other is 2: all LEDs on the display light up
+- Exactly one 3 - one of the dice shows 3 and the other does not: the 3 horizontal lines on the display light up
+- None of the above dice combinations: only the middle line on the display lights up
 
 **Game explanation:**
 - At the beginning, there is no DreiMann. During the round, both dice are rolled in turn (both buttons pressed). If a double is rolled (number 1 to 6 on the display), the person who rolled the result can give the number of minus points shown to another person.
